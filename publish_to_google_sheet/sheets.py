@@ -9,6 +9,13 @@ import pickle
 import numpy
 from typing import List
 
+def get_token_first_time(cred_file, scopes=['https://www.googleapis.com/auth/spreadsheets']):
+    save_location = './token.pickle'
+    flow = InstalledAppFlow.from_client_secrets_file(cred_file, scopes)
+    token = flow.run_local_server()
+    with open(save_location, 'wb') as token_file:
+        pickle.dump(token, token_file)
+    print(f"Token saved at {save_location}")
 
 def get_credentials(
         secret_file = 'credentials.json',

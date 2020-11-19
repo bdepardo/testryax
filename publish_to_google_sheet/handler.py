@@ -63,26 +63,18 @@ def handle(req):
         print(e)
 
 if __name__ == '__main__':
-    d = [
-            {'text': "hello to the whole wide world", 'timestamp': 20},
-            {'text': "bonjour monde", 'timestamp': 30},
-        ]
+    print("Running locally in order to fetch token.")
+    print("Finding credentials in ./credentials.json")
+    assert os.path.isfile('credentials.json'), "Credentials file not found in this directory!"
+    print("Credentials found!")
+    from sheets import get_token_first_time
+    print("Contacting the google API to fetch a valid token")
+    get_token_first_time('credentials.json')
+    print("Done")
 
-    loc = '/tmp/test.pkl'
-    save_object(d,loc)
-    print(f"Saving some test data in {loc}")
 
-    creds = json_from_file('credentials.json')
-    in_dict = {
-        'data':loc,
-        'credentials': str(creds),
-        'spreadsheet_id': '1ODnmC_i3Ir_3-ZBiJ8flWml6hxwbx9EXSWpEGkZn_eM',
-        'token_file': '/tmp/token.pickle'}
 
-    print(f"Using input:\n{in_dict}\n")
-    handle(in_dict)
-    os.remove(loc)
-    print("Removing test data\nAll done")
+
 
 
 
