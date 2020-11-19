@@ -1,0 +1,26 @@
+apiVersion: "ryax.tech/v1"
+kind: Publishers
+spec:
+  id: publish-to-google-sheet
+  human_name: Publish data to google sheet.
+  type: python3
+  version: "1.0"
+  logo: logo.png
+  detail: Get data from input file and publish it to a google sheet in your goodle drive.
+  inputs:
+  - help: Google API credentials
+    human_name: credentials
+    name: credentials
+    type: string
+  - help: Google API token (string representing path to the file)
+    human_name: Token file
+    name: token_file
+    type: string
+  - help: ID of google sheet
+    human_name: Spreadsheet ID
+    name: spreadsheet_id
+    type: string
+  - help: Data to push to the spreadsheet
+    human_name: Data
+    name: data
+    type: file

@@ -1,0 +1,4 @@
+google-auth-httplib2
+google-auth-oauthlib
+google_api_python_client
+numpy
