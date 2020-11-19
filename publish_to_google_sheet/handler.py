@@ -8,7 +8,7 @@ import os
 import pickle
 import json
 import numpy
-from ryax_google_agent.sheets import GoogleSpreadsheet, get_credentials
+from sheets import GoogleSpreadsheet, get_credentials
 
 def save_object(d, where):
     with open(where, 'wb') as f:
@@ -72,12 +72,12 @@ if __name__ == '__main__':
     save_object(d,loc)
     print(f"Saving some test data in {loc}")
 
-    creds = json_from_file('CREDENTIALS_FILE')
+    creds = json_from_file('credentials.json')
     in_dict = {
         'data':loc,
         'credentials': str(creds),
-        'spreadsheet_id': 'SPREADSHEET_ID',
-        'token_file': ''}
+        'spreadsheet_id': '1ODnmC_i3Ir_3-ZBiJ8flWml6hxwbx9EXSWpEGkZn_eM',
+        'token_file': '/tmp/token.pickle'}
 
     print(f"Using input:\n{in_dict}\n")
     handle(in_dict)

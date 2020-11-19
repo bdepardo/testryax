@@ -14,29 +14,26 @@ def get_credentials(
         secret_file = 'credentials.json',
         token_file = '/tmp/token.pickle',
         scopes =['https://www.googleapis.com/auth/spreadsheets']):
-    def token_subproc():
-        cred = FLOW.run_local_server(open_browser=False)
-        return cred
-    CRED = None
+    cred = None
     token_save_location = '/tmp/token.pickle'
     if os.path.exists(token_file):
         with open(token_file, 'rb') as token:
-            CRED = pickle.load(token)
+            cred = pickle.load(token)
             print(f'Found token at {token_file}')
-    if not CRED or not CRED.valid:
-        if CRED and CRED.expired and CRED.refresh_token:
+    if not cred or not cred.valid:
+        if cred and cred.expired and cred.refresh_token:
             print("WARNING: attempting to refresh token")
-            CRED.refresh(Request())
+            cred.refresh(Request())
         else:
             print(f"WARNING: token was either not found or was invalid")
-            FLOW = InstalledAppFlow.from_client_secrets_file(secret_file, scopes)
-            print(f"You must access the following URL to gain a google access token: {FLOW.authorization_url()[0]}\nUpload this token in the same directory as your handler.py to Ryax in order to use it.") 
+            flow = InstalledAppFlow.from_client_secrets_file(secret_file, scopes)
+            print(f"You must access the following URL to gain a google access token: {flow.authorization_url()[0]}\nUpload this token in the same directory as your handler.py to Ryax in order to use it.") 
             return None
-            # FLOW.run_local_server(open_browser=False)
+            # cred = flow.run_local_server()
     print(f"Valid token obtained, saving it to {token_save_location}")
     with open(token_save_location, 'wb') as token:
-        pickle.dump(CRED, token)
-    return CRED
+        pickle.dump(cred, token)
+    return cred
 
 class GoogleSpreadsheet:
     def __init__(self, id = None, credential = None, title = None, data = []):
